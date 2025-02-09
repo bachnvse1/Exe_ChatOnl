@@ -223,7 +223,27 @@ const Chatbox = () => {
   const [chatWindows, setChatWindows] = useState({});
   const [openChats, setOpenChats] = useState([]);
   const ws = useRef(null);
+  const handlePaste = (e, receiver) => {
+    const items = e.clipboardData.items;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf("image") === 0) {
+        const blob = items[i].getAsFile();
+        const reader = new FileReader();
 
+        reader.onloadend = () => {
+          const imageUrl = reader.result;
+          setInputs((prevInputs) => ({
+            ...prevInputs,
+            [receiver]:
+              prevInputs[receiver] + `<img src="${imageUrl}" alt="image" />`, // Thêm ảnh vào nội dung tin nhắn
+          }));
+        };
+
+        reader.readAsDataURL(blob);
+        break; // Chỉ xử lý một ảnh đầu tiên
+      }
+    }
+  };
   const savedUsername = sessionStorage.getItem("username");
   const isAdmin = sessionStorage.getItem("isAdmin") === "true";
 
@@ -361,9 +381,8 @@ const Chatbox = () => {
                 className={`message ${
                   msg.sender === username ? "user" : "admin"
                 }`}
-              >
-                {msg.text}
-              </div>
+                dangerouslySetInnerHTML={{ __html: msg.text }} // Hiển thị ảnh từ HTML
+              />
             ))}
           </div>
           <div className="chat-footer">
@@ -371,6 +390,7 @@ const Chatbox = () => {
               type="text"
               value={inputs["admin"] || ""}
               onChange={(e) => handleInputChange("admin", e.target.value)}
+              onPaste={(e) => handlePaste(e, "admin")} // Thêm sự kiện dán vào
               onKeyDown={(e) => e.key === "Enter" && sendMessage("admin")}
               placeholder="Nhập tin nhắn..."
             />
@@ -394,9 +414,8 @@ const Chatbox = () => {
                     className={`message ${
                       msg.sender === "admin" ? "admin" : "user"
                     }`}
-                  >
-                    {msg.text}
-                  </div>
+                    dangerouslySetInnerHTML={{ __html: msg.text }} // Hiển thị ảnh từ HTML
+                  />
                 ))}
               </div>
               <div className="chat-footer">
@@ -404,6 +423,7 @@ const Chatbox = () => {
                   type="text"
                   value={inputs[user] || ""}
                   onChange={(e) => handleInputChange(user, e.target.value)}
+                  onPaste={(e) => handlePaste(e, user)} // Thêm sự kiện dán vào
                   onKeyDown={(e) => e.key === "Enter" && sendMessage(user)}
                   placeholder="Nhập tin nhắn..."
                 />
