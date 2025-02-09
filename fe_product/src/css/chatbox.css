@@ -144,3 +144,31 @@
   font-size: 18px;
   font-weight: bold;
 }
+
+/* CSS cho ảnh nhỏ trong ô chat */
+.message img {
+  max-width: 150px; /* Giới hạn kích thước ảnh */
+  max-height: 150px;
+  cursor: pointer; /* Hiển thị con trỏ như thể nhấn vào ảnh */
+  border-radius: 5px;
+}
+
+/* Khi nhấn vào ảnh, hiển thị ảnh lớn */
+.modal-img {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  max-height: 90%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  display: none;
+}
+
+/* Mở modal */
+.modal-img img {
+  width: 100%;
+  height: auto;
+}
