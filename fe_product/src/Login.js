@@ -17,19 +17,25 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://localhost:5001/api/Users/login",
+        "https://4d40-14-232-112-111.ngrok-free.app/api/Users/login",
         {
           username,
           password,
+        },
+        {
+          withCredentials: true, // 👈 Thêm cái này nếu backend cần cookie/token
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 
       if (response.data?.success) {
         const userInfo = response.data;
 
-        // Lưu username và isAdmin vào sessionStorage
+        // Lưu vào sessionStorage
         sessionStorage.setItem("username", userInfo.username);
-        sessionStorage.setItem("isAdmin", userInfo.isAdmin ? "true" : "false"); // Đảm bảo lưu đúng kiểu dữ liệu
+        sessionStorage.setItem("isAdmin", userInfo.isAdmin ? "true" : "false");
 
         console.log("Đăng nhập thành công:", userInfo.username);
         navigate("/home");

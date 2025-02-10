@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import Chatbox from "./Chatbox";
 import "./css/style.css";
 import "./css/bootstrap.min.css";
@@ -15,9 +16,9 @@ import bagIcon from "./images/bag.svg";
 import supportIcon from "./images/support.svg";
 import returnIcon from "./images/return.svg";
 import whyChooseUsImg from "./images/why-choose-us-img.jpg";
-import blog1 from "./images/post-1.jpg";
-import blog2 from "./images/post-2.jpg";
-import blog3 from "./images/post-3.jpg";
+import blog1 from "./images/blog1.jpg";
+import blog2 from "./images/blog2.jpg";
+import blog3 from "./images/blog3.jpg";
 import envelopeIcon from "./images/envelope-outline.svg";
 import chatIcon from "./images/chat-icon.png";
 
@@ -38,6 +39,20 @@ const Home = () => {
   const [boxContent, setBoxContent] = useState("");
   const [showChat, setShowChat] = useState(false);
 
+  // State để lưu danh sách sản phẩm
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("https://4d40-14-232-112-111.ngrok-free.app/api/Products", {
+      headers: {
+        "ngrok-skip-browser-warning": "true", // Bỏ qua cảnh báo ngrok
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Lỗi khi lấy sản phẩm:", error));
+  }, []);
+
   return (
     <div className="home-container">
       {/* Navigation Bar */}
@@ -57,7 +72,7 @@ const Home = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="custom-navbar-nav navbar-nav ms-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="index.html">
+                <a className="nav-link" href="/home">
                   Home
                 </a>
               </li>
@@ -164,20 +179,50 @@ const Home = () => {
 
       {/* Blog Section */}
       <section className="blog-section container mt-5">
-        <h2 className="text-center mb-4">Recent Blog</h2>
+        <h2 className="text-center mb-4">Góc decor nổi bật</h2>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-4 d-flex flex-column align-items-center">
             <img src={blog1} className="img-fluid" alt="Blog 1" />
-            <h3>First Time Home Owner Ideas</h3>
           </div>
-          <div className="col-md-4">
-            <img src={blog2} className="img-fluid" alt="Blog 2" />
-            <h3>How To Keep Your Furniture Clean</h3>
-          </div>
-          <div className="col-md-4">
+          <div className="col-md-4 d-flex flex-column align-items-center">
             <img src={blog3} className="img-fluid" alt="Blog 3" />
-            <h3>Small Space Furniture Apartment Ideas</h3>
           </div>
+          <div className="col-md-4 d-flex flex-column align-items-center">
+            <img src={blog2} className="img-fluid" alt="Blog 2" />
+          </div>
+        </div>
+      </section>
+
+      {/* Danh sách combo */}
+      <section className="container mt-5">
+        <h2 className="text-center mb-4">Sản phẩm nổi bật</h2>
+        <div className="row">
+          {products.map((product) => (
+            <div key={product.id} className="col-md-4 d-flex">
+              <div className="card">
+                <img
+                  src={product.imageUrl}
+                  className="card-img-top product-image"
+                  alt={product.name}
+                />
+                <div className="card-body text-center">
+                  <h5 className="card-title">{product.name}</h5>
+                  <p className="card-text">{product.description}</p>
+                  <p className="text-danger">
+                    <strong>{product.price} VNĐ</strong>
+                  </p>
+                  <a
+                    href={product.shopeeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-success"
+                  >
+                    Mua ngay
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
