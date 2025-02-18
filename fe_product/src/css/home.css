@@ -1,117 +1,141 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-  }
-  
-  /* Navigation Bar */
-  .navbar {
-    background-color: #343a40;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar .logo {
-    color: white;
-    font-size: 24px;
-    text-decoration: none;
-  }
-  
-  .nav-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-  }
-  
-  .nav-links li {
-    margin-right: 20px;
-  }
-  
-  .nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-  }
-  
-  /* Hero Section */
-  .hero {
-    background-color: #ececec;
-    text-align: center;
-    padding: 80px 20px;
-  }
-  
-  .hero h1 {
-    font-size: 36px;
-    color: #333;
-  }
-  
-  .hero p {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-  }
-  
-  .btn:hover {
-    background-color: #218838;
-  }
-  
-  /* Product Section */
-  .product-section {
-    text-align: center;
-    padding: 50px 20px;
-  }
-  
-  .product-grid {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .product-item {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    text-align: center;
-  }
-  
-  .product-item img {
-    width: 100%;
-    border-radius: 10px;
-  }
-  
-  .product-item h3 {
-    margin-top: 10px;
-    font-size: 18px;
-  }
-  
-  .product-item p {
-    color: #28a745;
-    font-weight: bold;
-  }
-  
-  /* Footer */
-  .footer {
-    background-color: #343a40;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    margin-top: 40px;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: #343a40;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .logo {
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+/* Hero Section */
+.hero {
+  background-color: #ececec;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  color: #333;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: #218838;
+}
+
+/* Product Section */
+.product-section {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch; /* Giúp tất cả sản phẩm có chiều cao giống nhau */
+  gap: 20px;
+}
+
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Tránh bị lệch nội dung */
+  height: 100%; /* Căn chỉnh chiều cao */
+}
+
+
+.product-image-wrapper {
+  width: 100%;
+  height: 250px; /* Cố định chiều cao */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh luôn đầy đủ */
+}
+
+
+/* Chỉnh tiêu đề sản phẩm */
+.product-item h3 {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* Giá sản phẩm */
+.product-item p {
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+.blog-section .row img {
+  width: 100%;       /* Ảnh sẽ có chiều rộng đầy đủ trong cột */
+  height: 250px;     /* Đặt chiều cao cố định cho ảnh */
+  object-fit: cover; /* Cắt ảnh để luôn đầy khung mà không bị méo */
+  border-radius: 10px; /* Tạo bo góc nhẹ */
+}

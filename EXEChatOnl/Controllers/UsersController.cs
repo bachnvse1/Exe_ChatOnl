@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using EXEChatOnl.Models;
 using EXEChatOnl.DTOs;
 using EXEChatOnl.Service;
+using Microsoft.AspNetCore.Cors;
 
 namespace EXEChatOnl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("_myAllowSpecificOrigins")] // Áp dụng CORS
     public class UsersController : ControllerBase
     {
         private readonly DBContext _context;

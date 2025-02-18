@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import Chatbox from "./Chatbox";
 import "./css/style.css";
 import "./css/bootstrap.min.css";
+import "./css/tiny-slider.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // Import hình ảnh từ thư mục images
+import logo from "./images/LogoGomXinh.jpg";
 import product1 from "./images/product-1.png";
 import product2 from "./images/product-2.png";
 import product3 from "./images/product-3.png";
-import couch from "./images/couch.png";
+import config from "./config";
+import couch from "./images/combogom2-removebg-preview.png";
 import userIcon from "./images/user.svg";
 import cartIcon from "./images/cart.svg";
 import truckIcon from "./images/truck.svg";
@@ -15,9 +22,9 @@ import bagIcon from "./images/bag.svg";
 import supportIcon from "./images/support.svg";
 import returnIcon from "./images/return.svg";
 import whyChooseUsImg from "./images/why-choose-us-img.jpg";
-import blog1 from "./images/post-1.jpg";
-import blog2 from "./images/post-2.jpg";
-import blog3 from "./images/post-3.jpg";
+import blog1 from "./images/ComBo1.png";
+import blog2 from "./images/blog2.jpg";
+import blog3 from "./images/blog3.jpg";
 import envelopeIcon from "./images/envelope-outline.svg";
 import chatIcon from "./images/chat-icon.png";
 
@@ -38,65 +45,95 @@ const Home = () => {
   const [boxContent, setBoxContent] = useState("");
   const [showChat, setShowChat] = useState(false);
 
+  // State để lưu danh sách sản phẩm
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch(`${config.API_BASE_URL}/Products`, {
+      headers: {
+        "ngrok-skip-browser-warning": "true", // Bỏ qua cảnh báo ngrok
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Lỗi khi lấy sản phẩm:", error));
+  }, []);
+
   return (
-    <div className="home-container">
+    <>
       {/* Navigation Bar */}
-      <nav className="custom-navbar navbar navbar-expand-md navbar-dark bg-dark">
-        <div className="container">
-          <a className="navbar-brand" href="index.html">
-            Furni<span>.</span>
+      <nav
+        class="custom-navbar navbar navbar navbar-expand-md navbar-dark"
+        arial-label="Furni navigation bar"
+      >
+        <div class="container">
+          <a class="navbar-brand d-flex align-items-center" href="/home">
+            <img src={logo} alt="Logo" class="logo" />
+            <span class="brand-text">
+              Gom Xinh<span>.</span>
+            </span>
           </a>
+
           <button
-            className="navbar-toggler"
+            class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
+            data-bs-target="#navbarsFurni"
+            aria-controls="navbarsFurni"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="custom-navbar-nav navbar-nav ms-auto">
-              <li className="nav-item active">
-                <a className="nav-link" href="index.html">
-                  Home
+
+          <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+              <li class="nav-item ">
+                <a class="nav-link" href="/home">
+                  Trang chủ
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/shop">
+                  Cửa hàng
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="about.html">
+                  Câu chuyện thương hiệu
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="services.html">
+                  Dịch vụ
                 </a>
               </li>
               <li>
-                <a className="nav-link" href="shop.html">
-                  Shop
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="about.html">
-                  About us
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="services.html">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="blog.html">
+                <a class="nav-link" href="blog.html">
                   Blog
                 </a>
               </li>
               <li>
-                <a className="nav-link" href="contact.html">
-                  Contact us
+                <a class="nav-link" href="contact.html">
+                  Liên hệ
                 </a>
               </li>
             </ul>
-            <ul className="custom-navbar-cta navbar-nav ms-5">
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
               <li>
+                {" "}
                 <a className="nav-link" href="#">
-                  <img src={userIcon} alt="User" />
-                </a>
-              </li>
+                  {" "}
+                  <img src={userIcon} alt="User" />{" "}
+                </a>{" "}
+              </li>{" "}
               <li>
+                {" "}
                 <a className="nav-link" href="#">
-                  <img src={cartIcon} alt="Cart" />
-                </a>
+                  {" "}
+                  <img src={cartIcon} alt="Cart" />{" "}
+                </a>{" "}
               </li>
             </ul>
           </div>
@@ -108,16 +145,19 @@ const Home = () => {
         <div className="container">
           <div className="row justify-content-between">
             <div className="col-lg-5">
-              <h1>
-                Modern Interior <span className="d-block">Design Studio</span>
+              <h1 style={{ fontSize: "2rem" }}>
+                Modern Interior Combined With Tradition{" "}
+                <span className="d-block" style={{ fontSize: "1.8rem" }}>
+                  Design Studio
+                </span>
               </h1>
+
               <p>
-                Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet
-                velit.
+                Mang nét đẹp văn hoá đồ gốm decor hiện đại tới với mọi người
               </p>
               <p>
-                <a href="#" className="btn btn-secondary me-2">
-                  Shop Now
+                <a href="/shop" className="btn btn-secondary me-2">
+                  Mua ngay
                 </a>
                 <a href="#" className="btn btn-outline-dark">
                   Explore
@@ -136,19 +176,19 @@ const Home = () => {
       {/* Why Choose Us Section */}
       <section className="why-choose-section text-center mt-5">
         <div className="container">
-          <h2>Why Choose Us</h2>
+          <h2>Tại sao nên là chúng tôi</h2>
           <div className="row mt-4">
             <div className="col-md-3">
               <img src={truckIcon} alt="Fast Shipping" className="img-icon" />
-              <h3>Fast & Free Shipping</h3>
+              <h3>Vận chuyển nhanh gọn</h3>
             </div>
             <div className="col-md-3">
               <img src={bagIcon} alt="Easy Shopping" className="img-icon" />
-              <h3>Easy to Shop</h3>
+              <h3>Dễ dàng mua sắm</h3>
             </div>
             <div className="col-md-3">
               <img src={supportIcon} alt="24/7 Support" className="img-icon" />
-              <h3>24/7 Support</h3>
+              <h3>24/7 Hỗ trợ</h3>
             </div>
             <div className="col-md-3">
               <img
@@ -156,7 +196,7 @@ const Home = () => {
                 alt="Hassle Free Returns"
                 className="img-icon"
               />
-              <h3>Hassle Free Returns</h3>
+              <h3>Đổi trả dễ dàng</h3>
             </div>
           </div>
         </div>
@@ -164,25 +204,55 @@ const Home = () => {
 
       {/* Blog Section */}
       <section className="blog-section container mt-5">
-        <h2 className="text-center mb-4">Recent Blog</h2>
+        <h2 className="text-center mb-4">Góc decor nổi bật</h2>
         <div className="row">
-          <div className="col-md-4">
-            <img src={blog1} className="img-fluid" alt="Blog 1" />
-            <h3>First Time Home Owner Ideas</h3>
+          <div className="col-md-4 d-flex flex-column align-items-center">
+            <img src={blog3} className="img-fluid rounded-3" alt="Blog 3" />
           </div>
-          <div className="col-md-4">
-            <img src={blog2} className="img-fluid" alt="Blog 2" />
-            <h3>How To Keep Your Furniture Clean</h3>
+          <div className="col-md-4 d-flex flex-column align-items-center">
+            <img src={blog1} className="img-fluid rounded-3" alt="Blog 1" />
           </div>
-          <div className="col-md-4">
-            <img src={blog3} className="img-fluid" alt="Blog 3" />
-            <h3>Small Space Furniture Apartment Ideas</h3>
+          <div className="col-md-4 d-flex flex-column align-items-center">
+            <img src={blog2} className="img-fluid rounded-3" alt="Blog 2" />
           </div>
         </div>
       </section>
 
+      {/* Danh sách combo */}
+      <section className="container mt-5">
+        <h2 className="text-center mb-4">Sản phẩm nổi bật</h2>
+        <div className="row">
+          {products.slice(0, 3).map((product) => (
+            <div key={product.id} className="col-md-4 d-flex">
+              <div className="card">
+                <img
+                  src={product.imageUrl}
+                  className="card-img-top product-image"
+                  alt={product.name}
+                />
+                <div className="card-body text-center">
+                  <h5 className="card-title">{product.name}</h5>
+                  <p className="card-text">{product.description}</p>
+                  <p className="text-danger">
+                    {product.price.toLocaleString("vi-VN")} VNĐ
+                  </p>
+                  <a
+                    href={product.shopeeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-success"
+                  >
+                    Mua ngay
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="footer-section bg-dark text-light text-center p-3 mt-5">
+      <footer className="footer-section text-light text-center p-3 mt-5">
         <div className="container">
           <h3>Subscribe to Newsletter</h3>
           <form className="row g-3 justify-content-center">
@@ -206,7 +276,7 @@ const Home = () => {
               </button>
             </div>
           </form>
-          <p>&copy; {new Date().getFullYear()} Furni. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Gom Xinh Potter</p>
         </div>
       </footer>
 
@@ -214,7 +284,7 @@ const Home = () => {
         <nav className="custom-navbar navbar navbar-expand-md navbar-dark bg-dark">
           <div className="container">
             <a className="navbar-brand" href="#">
-              Furni<span className="text-primary">.</span>
+              Gom Xinh Potter<span className="text-primary">.</span>
             </a>
             <button
               className="navbar-toggler"
@@ -236,7 +306,7 @@ const Home = () => {
           <img src={chatIcon} alt="Chat" />
         </button>
       </div>
-    </div>
+    </>
   );
 };
 
