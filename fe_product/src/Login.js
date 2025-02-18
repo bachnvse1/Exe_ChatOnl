@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./css/login.css";
 import { useNavigate } from "react-router-dom";
+import config from "./config";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://4d40-14-232-112-111.ngrok-free.app/api/Users/login",
+        `${config.API_BASE_URL}/Users/login`,
         {
           username,
           password,
