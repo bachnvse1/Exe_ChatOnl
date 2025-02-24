@@ -48,13 +48,15 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                    "https://b6ec-14-232-112-111.ngrok-free.app"
+                    "https://34a5-123-16-201-164.ngrok-free.app",  // Production (ngrok)
+                    "http://localhost:3000"                       // Localhost FE
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
         });
 });
+
 
 var app = builder.Build();
 

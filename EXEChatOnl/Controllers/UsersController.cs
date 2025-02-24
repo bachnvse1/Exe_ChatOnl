@@ -14,7 +14,7 @@ namespace EXEChatOnl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("_myAllowSpecificOrigins")] // Áp dụng CORS
+    //[EnableCors("_myAllowSpecificOrigins")] // Áp dụng CORS
     public class UsersController : ControllerBase
     {
         private readonly DBContext _context;

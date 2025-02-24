@@ -3,13 +3,12 @@ import React, { useState, useEffect } from "react";
 import Chatbox from "./Chatbox";
 import "./css/style.css";
 import "./css/bootstrap.min.css";
-import "./css/tiny-slider.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // Import hình ảnh từ thư mục images
-import logo from "./images/LogoGomXinh.jpg";
+import logo from "./images/LogoGomXinh.webp";
 import product1 from "./images/product-1.png";
 import product2 from "./images/product-2.png";
 import product3 from "./images/product-3.png";
@@ -27,6 +26,7 @@ import blog2 from "./images/blog2.jpg";
 import blog3 from "./images/blog3.jpg";
 import envelopeIcon from "./images/envelope-outline.svg";
 import chatIcon from "./images/chat-icon.png";
+import { color } from "framer-motion";
 
 const FixedBox = ({ content, onClose }) => (
   <div className="fixed-box-overlay">

@@ -260,8 +260,7 @@ const Chatbox = () => {
   useEffect(() => {
     const connectWebSocket = () => {
       if (!ws.current || ws.current.readyState === WebSocket.CLOSED) {
-        ws.current = new WebSocket("wss://192.168.101.105:8181");
-
+        ws.current = new WebSocket("ws://192.168.101.105:8181");
         ws.current.onopen = () => {
           console.log(`✅ [${username}] WebSocket đã kết nối!`);
           ws.current.send(`USERNAME:${username}`);

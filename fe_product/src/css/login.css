@@ -1,11 +1,14 @@
 /* Tổng thể giao diện */
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f7f6;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2fffb;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url('/src/images/BG2.webp') no-repeat center center/cover;
+}
+
   
   /* Hộp đăng nhập */
   .login-box {
