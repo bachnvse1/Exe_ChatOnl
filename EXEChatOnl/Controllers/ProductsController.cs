@@ -12,7 +12,7 @@ namespace EXEChatOnl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("_myAllowSpecificOrigins")] // Áp dụng CORS
+    //[EnableCors("_myAllowSpecificOrigins")] // Áp dụng CORS
     public class ProductsController : ControllerBase
     {
         private readonly DBContext _context;
