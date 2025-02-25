@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./Login";
-import Home from "./home";
-import Shop from "./shop";
+import Login from "./Authen/Login";
+import Home from "./Home/home";
+import Shop from "./Home/shop";
+import OTP from "./Authen/otp";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/otp" element={<OTP />} />
       </Routes>
     </Router>
   );
