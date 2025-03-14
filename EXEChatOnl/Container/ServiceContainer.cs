@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Container.DependencyInjection.Mapper;
+using Microsoft.AspNetCore.OData;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 
 namespace Container.DependencyInjection
 {
@@ -14,11 +18,15 @@ namespace Container.DependencyInjection
         public static IServiceCollection InfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DBContext>(options =>
+            services.AddDbContext<MyDbContext>(options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
             );
+            services.AddControllers().AddOData(options =>
+            {
+                options.Select().Filter().OrderBy().Expand().Count().SetMaxTop(100);
+            });
 
-
+    
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -54,8 +62,18 @@ namespace Container.DependencyInjection
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddAutoMapper(typeof(MappingProfile));
+
             return services;
         }
-
+        private static IEdmModel GetEdmModel()
+        {
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Product>("Products");
+            builder.EntitySet<Category>("Categories");
+            return builder.GetEdmModel();
+        }
     }
 }

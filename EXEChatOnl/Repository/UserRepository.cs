@@ -2,21 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using EXEChatOnl.DTOs;
 
 namespace EXEChatOnl.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DBContext _context;
+        private readonly MyDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UserRepository(DBContext context)
+        public UserRepository(MyDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public IEnumerable<User> GetAllUsers()
-        {
-            return _context.Users.ToList();
+        public IEnumerable<ProfileUserRequest> GetAllUsers()
+        {   
+            var users = _context.Users
+                .Include(u=>u.UserRoles)
+                .Include(c=>c.Customer).ToList();
+            var mappedUsers = _mapper.Map<IEnumerable<ProfileUserRequest>>(users);
+            return mappedUsers;
         }
 
         public User? GetUserById(int id)
@@ -48,7 +56,7 @@ namespace EXEChatOnl.Repository
 
         public User? GetUserByLogin(string username)
         {
-            return _context.Users.FirstOrDefault(u => u.Username == username);
+            return _context.Users.Include(u=>u.UserRoles).FirstOrDefault(u => u.Username == username);
         }
     }
 }

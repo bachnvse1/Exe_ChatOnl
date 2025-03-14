@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+using EXEChatOnl.Models;
 
-namespace EXEChatOnl.Models;
+namespace EXEChatOnl.DTOs;
 
-public partial class Product
+public class ProductSearchRequest
 {
     public int Id { get; set; }
 
@@ -23,11 +22,6 @@ public partial class Product
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
-
     public virtual Category? Category { get; set; }
-
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
-
-    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public string NormalizedName { get; set; }
 }
