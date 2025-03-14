@@ -1,6 +1,7 @@
 ﻿using Container.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Fleck;
+using Microsoft.AspNetCore.OData;
 using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.InfrastructureServices(builder.Configuration);
 
 // Thêm các dịch vụ cơ bản
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -48,7 +48,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                    "https://34a5-123-16-201-164.ngrok-free.app",  // Production (ngrok)
+                    "https://ba39-14-232-61-47.ngrok-free.app",  // Production (ngrok)
                     "http://localhost:3000"                       // Localhost FE
                 )
                 .AllowAnyHeader()
@@ -62,7 +62,8 @@ var app = builder.Build();
 
 // Áp dụng CORS
 app.UseCors(MyAllowSpecificOrigins);
-
+app.UseAuthentication();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

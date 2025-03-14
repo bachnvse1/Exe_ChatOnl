@@ -7,9 +7,9 @@ namespace EXEChatOnl.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly DBContext _context;
+        private readonly MyDbContext _context;
 
-        public ProductRepository(DBContext context)
+        public ProductRepository(MyDbContext context)
         {
             _context = context;
         }

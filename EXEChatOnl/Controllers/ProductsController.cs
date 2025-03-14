@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
+using EXEChatOnl.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EXEChatOnl.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace EXEChatOnl.Controllers
 {
@@ -15,23 +20,39 @@ namespace EXEChatOnl.Controllers
     //[EnableCors("_myAllowSpecificOrigins")] // Áp dụng CORS
     public class ProductsController : ControllerBase
     {
-        private readonly DBContext _context;
+        private readonly MyDbContext _context;
 
-        public ProductsController(DBContext context)
+        private readonly IMapper _mapper;
+
+        public ProductsController(MyDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        [EnableQuery]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<ProductSearchRequest>>> GetProducts()
         {
-          if (_context.Products == null)
-          {
-              return NotFound();
-          }
-            return await _context.Products.ToListAsync();
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (userRole == null)
+            {
+                return Forbid();
+            }
+            if (_context.Products == null)
+            {
+                return NotFound();
+            }
+
+            var products = await _context.Products.ToListAsync();
+            
+            var mappedProducts = _mapper.Map<List<ProductSearchRequest>>(products);
+
+
+            return Ok(mappedProducts.AsQueryable());
         }
+
 
         // GET: api/Products/5
         [HttpGet("{id}")]

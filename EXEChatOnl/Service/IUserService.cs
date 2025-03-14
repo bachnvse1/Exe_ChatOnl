@@ -8,5 +8,13 @@ namespace EXEChatOnl.Service
         RegistrationResponse RegisterUser(RegisterUserDTOs registerUserDTOs);
 
         LoginResponse LoginUser(LoginDTOs loginDTOs);
+        
+        ProfileUserRequest GetUserByUsername(string username);
+        
+        void UpdateUserByUsername(ProfileUserRequest userRequest);
+        
+        bool ChangePassword(string username, string oldPassword, string newPassword);
+        
+        IEnumerable<ProfileUserRequest> GetUsers();
     }
 }

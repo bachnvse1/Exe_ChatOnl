@@ -1,11 +1,12 @@
-﻿using EXEChatOnl.Models;
+﻿ using EXEChatOnl.Models;
 using System.Collections.Generic;
+using EXEChatOnl.DTOs;
 
 namespace EXEChatOnl.Repository
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetAllUsers();
+        IEnumerable<ProfileUserRequest> GetAllUsers();
         User? GetUserById(int id);
         User? GetUserByLogin(string username);
         void AddUser(User user);

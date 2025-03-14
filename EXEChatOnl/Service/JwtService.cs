@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using EXEChatOnl.Models;
 using EXEChatOnl.Service;
+using NuGet.Packaging;
 
 namespace EXEChatOnl.Services
 {
@@ -26,9 +27,9 @@ namespace EXEChatOnl.Services
             var userClaims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.UserRoles.FirstOrDefault()?.RoleName ?? "null")
             };
-
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
