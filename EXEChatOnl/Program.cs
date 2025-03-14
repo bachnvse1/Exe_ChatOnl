@@ -48,8 +48,8 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                    "https://ba39-14-232-61-47.ngrok-free.app",  // Production (ngrok)
-                    "http://localhost:3000"                       // Localhost FE
+                    "https://6f8f-14-232-61-47.ngrok-free.app",  // Production (ngrok)
+                    "http://localhost:3001"                       // Localhost FE
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod()

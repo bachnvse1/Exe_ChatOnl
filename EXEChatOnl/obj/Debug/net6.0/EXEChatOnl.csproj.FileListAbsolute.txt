@@ -277,6 +277,7 @@ D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\EXEChatOnl.AssemblyI
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\EXEChatOnl.csproj.CoreCompileInputs.cache
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\EXEChatOnl.MvcApplicationPartsAssemblyInfo.cs
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\EXEChatOnl.MvcApplicationPartsAssemblyInfo.cache
+D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\EXEChatOnl.sourcelink.json
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\staticwebassets.build.json
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\staticwebassets.development.json
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\staticwebassets\msbuild.EXEChatOnl.Microsoft.AspNetCore.StaticWebAssets.props
@@ -291,3 +292,10 @@ D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\refint\EXEChatOnl.dl
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\EXEChatOnl.pdb
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\EXEChatOnl.genruntimeconfig.cache
 D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\obj\Debug\net6.0\ref\EXEChatOnl.dll
+D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\bin\Debug\net6.0\Microsoft.AspNetCore.OData.dll
+D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\bin\Debug\net6.0\Microsoft.OData.Core.dll
+D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\bin\Debug\net6.0\Microsoft.OData.Edm.dll
+D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\bin\Debug\net6.0\Microsoft.OData.ModelBuilder.dll
+D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\bin\Debug\net6.0\Microsoft.Spatial.dll
+D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\bin\Debug\net6.0\AutoMapper.dll
+D:\Semester_8\Prn231\EXEChatOnl\EXEChatOnl\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
