@@ -15,6 +15,6 @@ public class ProfileUserRequest
 
     public string? Address { get; set; }
 
-    public List<string> RoleName { get; set; } = null!;
+    public List<string>? RoleName { get; set; } = null!;
 
 }
