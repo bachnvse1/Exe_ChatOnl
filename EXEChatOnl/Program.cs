@@ -39,6 +39,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Thêm CORS
@@ -49,7 +50,7 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(
                     "https://6f8f-14-232-61-47.ngrok-free.app",  // Production (ngrok)
-                    "http://localhost:3001"                       // Localhost FE
+                    "http://localhost:3000"                       // Localhost FE
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod()
