@@ -19,6 +19,12 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.UserRoles.Select(x => x.RoleName).ToList()));
         CreateMap<Cart, CartRequest>()
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId));
+        
+        CreateMap<Order, OrdersRequest>()
+            .ForMember(dest => dest.customerName, opt => opt.MapFrom(src => src.Customer.FullName));
+        
+        CreateMap<OrderDetail, OrderDetailsRequest>()
+            .ForMember(dest => dest.productName, opt => opt.MapFrom(src => src.Product.Name));
     }
 
     public static string RemoveDiacritics(string text)

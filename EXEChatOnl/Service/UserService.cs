@@ -23,13 +23,14 @@ namespace EXEChatOnl.Service
         public LoginResponse LoginUser(LoginDTOs loginDTOs)
         {
             var getUser = _userRepository.GetUserByLogin(loginDTOs.Username);
-            if (getUser != null)
+            var userRoles = _context.UserRoles.Where(u => u.UserId == getUser.Id).First();
+            if (getUser != null && getUser.IsDeleted == false)
             {
                 bool checkPassword = BCrypt.Net.BCrypt.Verify(loginDTOs.Password, getUser.Password);
                 if (checkPassword)
                 {
                     string token = _jwtService.GenerateJWTToken(getUser);
-                    bool isAdmin = getUser.Username == "admin";
+                    bool isAdmin = userRoles.RoleName == "admin";
 
                     return new LoginResponse(true, "Login successfully!", token, getUser.Username, isAdmin);
                 }

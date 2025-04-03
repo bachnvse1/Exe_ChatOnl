@@ -15,11 +15,13 @@ public partial class Product
 
     public string? ImageUrl { get; set; }
 
-    public string ShopeeUrl { get; set; } = null!;
+    public string? ShopeeUrl { get; set; }
 
     public int? CategoryId { get; set; }
 
     public DateTime? CreatedAt { get; set; }
+    
+    public bool IsDeleted { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 

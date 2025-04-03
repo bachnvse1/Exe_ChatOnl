@@ -21,7 +21,8 @@ namespace Container.DependencyInjection
             services.AddDbContext<MyDbContext>(options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
             );
-            services.AddControllers().AddOData(options =>
+            services.AddControllers().AddXmlSerializerFormatters()
+                .AddOData(options =>
             {
                 options.Select().Filter().OrderBy().Expand().Count().SetMaxTop(100);
             });

@@ -16,6 +16,7 @@ public class ProductSearchRequest
 
     public string ShopeeUrl { get; set; } = null!;
 
+    public bool IsDeleted { get; set; }
     public int? CategoryId { get; set; }
 
     public DateTime? CreatedAt { get; set; }
