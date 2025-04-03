@@ -6,10 +6,8 @@ using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Đăng ký các dịch vụ từ ServiceContainer
 builder.Services.InfrastructureServices(builder.Configuration);
 
-// Thêm các dịch vụ cơ bản
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -42,7 +40,6 @@ builder.Services.AddSwaggerGen(c =>
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-// Thêm CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -61,20 +58,18 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Áp dụng CORS
+
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// 🔥 Khởi động WebSocket server không chặn main thread
+
 Task.Run(() => StartWebSocketServer());
 
 app.Run();
 
-// ------------------------------------
-// 🚀 WebSocket Server chạy song song với API
 void StartWebSocketServer()
 {
     var server = new WebSocketServer("ws://0.0.0.0:8181")
@@ -141,7 +136,7 @@ void StartWebSocketServer()
 
                     string sender = wsConnections[ws];
 
-                    // 🛠 Kiểm tra JSON hợp lệ
+                   
                     var jsonData = JsonConvert.DeserializeObject<Dictionary<string, string>>(message);
                     if (jsonData == null || !jsonData.ContainsKey("receiver") || !jsonData.ContainsKey("text"))
                     {
@@ -152,7 +147,7 @@ void StartWebSocketServer()
                     string receiver = jsonData["receiver"];
                     string text = jsonData["text"];
 
-                    // 👉 Kiểm tra người nhận có online không
+                  
                     var receiverConnection = wsConnections.FirstOrDefault(c => c.Value == receiver).Key;
                     if (receiverConnection == null)
                     {
@@ -160,7 +155,7 @@ void StartWebSocketServer()
                         return;
                     }
 
-                    // 👉 Gửi tin nhắn đến người nhận
+                    
                     var jsonMessage = new { sender, text };
                     receiverConnection.Send(JsonConvert.SerializeObject(jsonMessage));
                     Console.WriteLine($"📨 {sender} gửi tin nhắn đến {receiver}: {text}");

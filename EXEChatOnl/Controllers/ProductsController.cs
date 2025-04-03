@@ -75,14 +75,26 @@ namespace EXEChatOnl.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutProduct(int id, ProductSearchRequest request)
         {
-            if (id != product.Id)
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (userRole != "admin")
             {
-                return BadRequest();
+                return Forbid();
+            }
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound("Sản phẩm không tồn tại.");
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            product.Name = request.Name ?? product.Name;
+            product.Description = request.Description ?? product.Description;
+            product.Price = request.Price ?? product.Price;
+            product.ImageUrl = request.ImageUrl ?? product.ImageUrl;
+            product.ShopeeUrl = request.ShopeeUrl ?? product.ShopeeUrl;
+            product.CategoryId = request.CategoryId ?? product.CategoryId;
+            product.UpdatedAt = DateTime.UtcNow;
 
             try
             {
@@ -90,7 +102,7 @@ namespace EXEChatOnl.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!_context.Products.Any(p => p.Id == id))
                 {
                     return NotFound();
                 }
@@ -106,38 +118,93 @@ namespace EXEChatOnl.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct(CreateProductRequest request)
         {
-          if (_context.Products == null)
-          {
-              return Problem("Entity set 'DBContext.Products'  is null.");
-          }
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            // Kiểm tra quyền của người dùng
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (userRole != "admin")
+            {
+                return Forbid();  // Nếu không phải admin, trả về lỗi Forbidden
+            }
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            if (_context.Products == null)
+            {
+                return Problem("Entity set 'DBContext.Products' is null.");
+            }
+
+            try
+            {
+                // Kiểm tra giá trị price
+                if (request.Price <= 0)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Giá sản phẩm phải lớn hơn 0!"  // Trả về thông báo khi giá sản phẩm không hợp lệ
+                    });
+                }
+
+                // Kiểm tra danh mục sản phẩm
+                var category = _context.Categories.FirstOrDefault(c => c.Name == request.Category);
+                if (category == null)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Danh mục sản phẩm không hợp lệ!"  // Trả về thông báo khi không tìm thấy danh mục
+                    });
+                }
+
+                // Tạo sản phẩm mới
+                var product = new Product
+                {
+                    Name = request.Name,
+                    Price = request.Price,
+                    Description = request.Description,
+                    CategoryId = category.Id,
+                    ShopeeUrl = "",  // Có thể cập nhật sau
+                    ImageUrl = request.Image
+                };
+
+                // Thêm sản phẩm vào cơ sở dữ liệu
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+
+                // Trả về thông báo thành công
+                return Ok(new
+                {
+                    message = "Tạo sản phẩm thành công!"  // Thông báo thành công
+                });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new
+                {
+                    message = $"Lỗi khi tạo sản phẩm: {e.Message}"  // Thông báo lỗi chi tiết
+                });
+            }
         }
+
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            if (_context.Products == null)
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (userRole != "admin")
             {
-                return NotFound();
+                return Forbid();
             }
             var product = await _context.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
-            
 
-            _context.Products.Remove(product);
+            product.IsDeleted = !product.IsDeleted;
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new { message = product.IsDeleted ? "Sản phẩm đã bị vô hiệu hóa." : "Sản phẩm đã được kích hoạt lại." });
         }
+
 
         private bool ProductExists(int id)
         {

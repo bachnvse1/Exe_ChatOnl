@@ -42,6 +42,11 @@ public class CartsController : ControllerBase
         {
             return Unauthorized(new { message = "Người dùng không hợp lệ" });
         }
+        var product = _context.Products.FirstOrDefault(x => x.Id == productId);
+        if (product == null || product.IsDeleted) return NotFound(new
+        {
+            message = "Sản phẩm không còn!"
+        });
         _cartRepository.AddToCart(customer.Id, productId, quantity);
 
         return Ok(new { message = "Thêm vào giỏ hàng thành công!" });
